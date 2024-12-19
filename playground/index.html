@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	</head>
+
+	<body>
+	</body>
+
+<script type="module">
+import create from '/webcode/index.js';
+(function () {
+  const config = {
+    productConfiguration: {
+      nameShort: "Webcode",
+      nameLong: "Webcode Playground",
+      applicationName: "webcode-playground",
+      dataFolderName: ".webcode-playground",
+      version: "1.0.0",
+      extensionEnabledApiProposals: {
+      },
+      openToWelcomeMainPage: true
+    },
+    windowIndicator: {
+        label: 'Webcode Playground',
+        tooltip: 'Webcode Playground',
+        command: ''
+    },
+    additionalBuiltinExtensions: [
+    ]
+  };    
+  create(window.document.body, {
+    ...config,
+    settingsSyncOptions: {
+        enabled: false
+    },
+  });
+})();
+
+</script>
+</html>

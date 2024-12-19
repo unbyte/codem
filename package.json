@@ -37,7 +37,7 @@
     "check:type": "tsc --noEmit",
     "fix": "biome check --write",
     "go": "tsx src/index.ts",
-    "playground": "tsx scripts/playground.mts",
+    "playground": "pnpm build && tsx scripts/playground.mts",
     "build": "tsx scripts/build.mts",
     "prepublishOnly": "pnpm build"
   },

@@ -10,7 +10,11 @@ const run = async (command: string, args: string[] = [], options?: Partial<Spawn
   await new Promise((resolve) => child.on('close', resolve))
 }
 
-await run('pnpm', ['build'])
+const playground = resolve(import.meta.dirname, '..', 'playground')
+
 await run('pnpm', ['webcode'], {
-  cwd: resolve(import.meta.dirname, '..', 'playground'),
+  cwd: playground,
+})
+await run('pnpm', ['http-server', '-p', '8080'], {
+  cwd: playground,
 })
