@@ -1,47 +1,45 @@
 export enum VscodeChannel {
   /**
-   * stable channel.
+   * Stable release channel
    */
   Stable = 'stable',
 
   /**
-   * insider channel.
+   * Insiders preview channel
    */
   Insider = 'insider',
 }
 
 export interface Config {
   /**
-   * The channel to use.
+   * The VSCode release channel to use
    *
    * @default VscodeChannel.Stable
    */
   channel?: VscodeChannel
 
   /**
-   * The commit hash of microsoft/vscode to use.
+   * The specific commit hash from microsoft/vscode repository to use
    */
   commit?: string
 
   /**
-   * The released version of vscode to use.
+   * The specific VSCode release version to use
    *
-   * If both `commit` and `version` are provided, `commit` will be used.
-   *
-   * If neither are provided, the latest version will be used.
+   * Note: If both `commit` and `version` are specified, `commit` takes precedence.
+   * If neither is specified, the `latest` version will be used.
    */
   version?: string
 
   /**
-   * The base url which will be used to reference resources from
-   * the vscode web-standalone.
+   * The base URL path for loading VSCode web-standalone resources
    *
    * @default `/webcode`
    */
   baseUrl?: string
 
   /**
-   * The output directory of the vscode web-standalone.
+   * The directory where VSCode web-standalone files will be output
    *
    * @default `${cwd}/webcode`
    */
