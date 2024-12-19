@@ -1,7 +1,7 @@
+import d from 'debug'
 import { loadConfig } from './config'
 import { downloadVscode } from './download-vscode'
 import { generateEntry } from './generate-entry'
-import d from 'debug'
 
 const debug = d('webcode:cli')
 

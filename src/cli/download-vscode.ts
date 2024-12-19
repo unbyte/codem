@@ -1,11 +1,11 @@
-import type { NormalizedConfig } from "./config";
-import { tempdir } from "./utils";
-import d from 'debug'
-import { extract } from 'tar-fs'
-import gunzip from 'gunzip-maybe'
+import { rename, rm } from 'node:fs/promises'
 import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
-import { rename, rm } from "node:fs/promises";
+import d from 'debug'
+import gunzip from 'gunzip-maybe'
+import { extract } from 'tar-fs'
+import type { NormalizedConfig } from './config'
+import { tempdir } from './utils'
 
 const debug = d('webcode:download-vscode')
 
@@ -35,11 +35,7 @@ export async function downloadVscode(config: NormalizedConfig) {
   const raw = Readable.fromWeb(stream)
 
   try {
-    await pipeline(
-      raw,
-      gunzip(),
-      extract(downloadDir.path, { strip: 1 }),
-    )
+    await pipeline(raw, gunzip(), extract(downloadDir.path, { strip: 1 }))
   } catch (error) {
     throw new Error('failed to extract VSCode', { cause: error })
   }

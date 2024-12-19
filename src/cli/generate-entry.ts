@@ -1,9 +1,9 @@
-import type { NormalizedConfig } from "./config"
-import { writeFile } from "node:fs/promises"
-import { join } from "node:path"
+import { writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import type { NormalizedConfig } from './config'
 
 export async function generateEntry(config: NormalizedConfig) {
-    const entry = `
+  const entry = `
 export default async function(mountpoint, config) {
     globalThis._VSCODE_FILE_ROOT = '${config.baseUrl}/out/'
     await import('${config.baseUrl}/out/nls.messages.js')
@@ -27,4 +27,3 @@ function insertStyle() {
   const entryPath = join(config.output, 'index.js')
   await writeFile(entryPath, entry)
 }
-

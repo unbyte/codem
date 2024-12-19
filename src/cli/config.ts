@@ -1,8 +1,8 @@
+import { join } from 'node:path'
 import { cosmiconfig } from 'cosmiconfig'
 import { TypeScriptLoader } from 'cosmiconfig-typescript-loader'
-import { type Config, VscodeChannel } from '../types'
 import d from 'debug'
-import { join } from 'node:path'
+import { type Config, VscodeChannel } from '../types'
 
 const debug = d('webcode:config')
 
