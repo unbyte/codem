@@ -11,8 +11,8 @@
 
 <script type="module">
 import create from '/webcode/index.js';
-(function () {
-  const config = {
+(function () {  
+  create(window.document.body, {
     productConfiguration: {
       nameShort: "Webcode",
       nameLong: "Webcode Playground",
@@ -29,10 +29,7 @@ import create from '/webcode/index.js';
         command: ''
     },
     additionalBuiltinExtensions: [
-    ]
-  };    
-  create(window.document.body, {
-    ...config,
+    ],
     settingsSyncOptions: {
         enabled: false
     },

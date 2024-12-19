@@ -1,6 +1,9 @@
 {
   "private": true,
   "name": "webcode-playground",
+  "scripts": {
+    "serve": "http-server -p 8080 ."
+  },
   "devDependencies": {
     "webcode": "workspace:*",
     "http-server": "^14.1.1"

@@ -1,7 +1,7 @@
 {
   "name": "webcode",
   "version": "0.1.0",
-  "description": "use vscode web-standalone easily",
+  "description": "a tool to easily set up and embed VSCode web-standalone in projects.",
   "author": "unbyte<i@shangyes.net>",
   "license": "MIT",
   "repository": {

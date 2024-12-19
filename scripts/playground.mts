@@ -15,6 +15,6 @@ const playground = resolve(import.meta.dirname, '..', 'playground')
 await run('pnpm', ['webcode'], {
   cwd: playground,
 })
-await run('pnpm', ['http-server', '-p', '8080'], {
+await run('pnpm', ['serve'], {
   cwd: playground,
 })
