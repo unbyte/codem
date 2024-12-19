@@ -14,11 +14,6 @@ const run = async (
   await new Promise((resolve) => child.on('close', resolve))
 }
 
-const playground = resolve(import.meta.dirname, '..', 'playground')
-
-await run('pnpm', ['codew'], {
-  cwd: playground,
-})
 await run('pnpm', ['serve'], {
-  cwd: playground,
+  cwd: resolve(import.meta.dirname, '..', 'playground'),
 })
