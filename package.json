@@ -1,0 +1,65 @@
+{
+  "name": "webcode",
+  "version": "0.1.0",
+  "description": "use vscode web-standalone easily",
+  "author": "unbyte<i@shangyes.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unbyte/webcode.git"
+  },
+  "homepage": "https://github.com/unbyte/webcode",
+  "bugs": {
+    "url": "https://github.com/unbyte/webcode/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "webcode": "dist/cli/index.js"
+  },
+  "main": "dist/helper/index.js",
+  "types": "dist/helper/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/helper/index.d.mts",
+        "default": "./dist/helper/index.mjs"
+      },
+      "require": {
+        "types": "./dist/helper/index.d.ts",
+        "default": "./dist/helper/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "check": "pnpm check:lint && pnpm check:type",
+    "check:lint": "biome check",
+    "check:type": "tsc --noEmit",
+    "fix": "biome check --write",
+    "go": "tsx src/index.ts",
+    "build": "tsx build.mts",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "cosmiconfig": "^9.0.0",
+    "cosmiconfig-typescript-loader": "^6.1.0",
+    "debug": "^4.4.0",
+    "gunzip-maybe": "^1.4.2",
+    "tar-fs": "^3.0.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/debug": "^4.1.12",
+    "@types/gunzip-maybe": "^1.4.2",
+    "@types/node": "^22.10.2",
+    "@types/tar-fs": "^2.0.4",
+    "lefthook": "^1.9.3",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
