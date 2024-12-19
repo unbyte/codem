@@ -5,7 +5,7 @@ import d from 'debug'
 import gunzip from 'gunzip-maybe'
 import { extract } from 'tar-fs'
 import type { NormalizedConfig } from './config'
-import { tempdir } from './utils'
+import { progress, tempdir } from './utils'
 
 const debug = d('webcode:download-vscode')
 
@@ -35,7 +35,14 @@ export async function downloadVscode(config: NormalizedConfig) {
   const raw = Readable.fromWeb(stream)
 
   try {
-    await pipeline(raw, gunzip(), extract(downloadDir.path, { strip: 1 }))
+    const total = Number(response.headers.get('content-length')) || 0
+    using bar = progress('Downloading VSCode...', total)
+    await pipeline(
+      raw,
+      bar.stream,
+      gunzip(),
+      extract(downloadDir.path, { strip: 1 }),
+    )
   } catch (error) {
     throw new Error('failed to extract VSCode', { cause: error })
   }

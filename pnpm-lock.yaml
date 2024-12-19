@@ -52,6 +52,12 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
+  playground:
+    devDependencies:
+      webcode:
+        specifier: workspace:*
+        version: link:..
+
 packages:
 
   '@babel/code-frame@7.26.2':

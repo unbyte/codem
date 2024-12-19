@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "name": "webcode-playground",
+  "devDependencies": {
+    "webcode": "workspace:*"
+  }
+}

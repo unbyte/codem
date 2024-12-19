@@ -49,10 +49,13 @@ function normalizeConfig(config: Config): NormalizedConfig {
   let version: string | undefined
   let commit: string | undefined
   if (config.commit) {
+    console.log('using commit', config.commit)
     commit = config.commit
   } else if (config.version) {
+    console.log('using version', config.version)
     version = config.version
   } else {
+    console.log('no version or commit found, using latest')
     version = 'latest'
   }
   return {
