@@ -16,7 +16,7 @@ const run = async (
 
 const playground = resolve(import.meta.dirname, '..', 'playground')
 
-await run('pnpm', ['webcode'], {
+await run('pnpm', ['codew'], {
   cwd: playground,
 })
 await run('pnpm', ['serve'], {

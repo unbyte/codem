@@ -54,12 +54,12 @@ importers:
 
   playground:
     devDependencies:
+      codem:
+        specifier: workspace:*
+        version: link:..
       http-server:
         specifier: ^14.1.1
         version: 14.1.1(debug@4.4.0)
-      webcode:
-        specifier: workspace:*
-        version: link:..
 
 packages:
 

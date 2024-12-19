@@ -7,7 +7,7 @@ import { extract } from 'tar-fs'
 import type { NormalizedConfig } from './config'
 import { progress, tempdir } from './utils'
 
-const debug = d('webcode:download-vscode')
+const debug = d('codem:download-vscode')
 
 export async function downloadVscode(config: NormalizedConfig) {
   await using downloadDir = await tempdir()

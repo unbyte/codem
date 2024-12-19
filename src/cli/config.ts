@@ -4,7 +4,7 @@ import { TypeScriptLoader } from 'cosmiconfig-typescript-loader'
 import d from 'debug'
 import { type Config, VscodeChannel } from '../types'
 
-const debug = d('webcode:config')
+const debug = d('codem:config')
 
 export interface NormalizedConfig {
   channel: VscodeChannel
@@ -15,14 +15,14 @@ export interface NormalizedConfig {
 }
 
 export async function loadConfig() {
-  const explorer = cosmiconfig('webcode', {
+  const explorer = cosmiconfig('codem', {
     searchPlaces: [
       'package.json',
-      'webcode.config.mts',
-      'webcode.config.ts',
-      'webcode.config.mjs',
-      'webcode.config.js',
-      'webcode.config.json',
+      'codem.config.mts',
+      'codem.config.ts',
+      'codem.config.mjs',
+      'codem.config.js',
+      'codem.config.json',
     ],
     loaders: {
       '.ts': TypeScriptLoader(),
@@ -33,7 +33,7 @@ export async function loadConfig() {
   try {
     const result = await explorer.search()
     if (!result?.config) {
-      throw new Error('webcode: no configuration file found')
+      throw new Error('codem: no configuration file found')
     }
     debug('read configuration from', result?.filepath)
     debug('raw configuration', result?.config)
@@ -41,7 +41,7 @@ export async function loadConfig() {
     debug('normalized configuration', normalized)
     return normalized
   } catch (error) {
-    throw new Error('webcode: failed to load configuration', { cause: error })
+    throw new Error('codem: failed to load configuration', { cause: error })
   }
 }
 
@@ -59,9 +59,9 @@ function normalizeConfig(config: Config): NormalizedConfig {
     version = 'latest'
   }
   return {
-    output: config.output || join(process.cwd(), 'webcode'),
+    output: config.output || join(process.cwd(), 'vscode'),
     channel: config.channel || VscodeChannel.Insider,
-    baseUrl: config.baseUrl || '/webcode',
+    baseUrl: config.baseUrl || '/vscode',
     version,
     commit,
   }

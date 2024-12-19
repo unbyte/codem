@@ -1,11 +1,12 @@
 {
   "private": true,
-  "name": "webcode-playground",
+  "name": "codem-playground",
   "scripts": {
+    "preserve": "codem",
     "serve": "http-server -p 8080 ."
   },
   "devDependencies": {
-    "webcode": "workspace:*",
+    "codem": "workspace:*",
     "http-server": "^14.1.1"
   }
 }

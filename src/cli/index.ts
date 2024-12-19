@@ -3,7 +3,7 @@ import { loadConfig } from './config'
 import { downloadVscode } from './download-vscode'
 import { generateEntry } from './generate-entry'
 
-const debug = d('webcode:cli')
+const debug = d('codem:cli')
 
 async function main() {
   const config = await loadConfig()

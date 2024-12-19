@@ -1,20 +1,20 @@
 {
-  "name": "webcode",
+  "name": "codem",
   "version": "0.1.0",
-  "description": "a tool to easily set up and embed VSCode web-standalone in projects.",
+  "description": "easily embed VSCode web-standalone in projects",
   "author": "unbyte<i@shangyes.net>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unbyte/webcode.git"
+    "url": "https://github.com/unbyte/codem.git"
   },
-  "homepage": "https://github.com/unbyte/webcode",
+  "homepage": "https://github.com/unbyte/codem",
   "bugs": {
-    "url": "https://github.com/unbyte/webcode/issues"
+    "url": "https://github.com/unbyte/codem/issues"
   },
   "files": ["dist"],
   "bin": {
-    "webcode": "dist/cli/index.js"
+    "codem": "dist/cli/index.js"
   },
   "main": "dist/helper/index.js",
   "types": "dist/helper/index.d.ts",

@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { Transform } from 'node:stream'
 
 export async function tempdir() {
-  const path = await mkdtemp(join(tmpdir(), 'webcode-'))
+  const path = await mkdtemp(join(tmpdir(), 'codeweb-'))
   return {
     path,
     async [Symbol.asyncDispose]() {

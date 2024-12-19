@@ -1,18 +1,18 @@
-# webcode
+# codem
 
-> a tool to easily set up and embed VSCode web-standalone in projects.
+> easily embed VSCode web-standalone in projects
 
 ## Installation
 
 ```bash
 # npm
-npm install webcode
+$ npm install -D codem
 
 # pnpm
-pnpm add webcode
+$ pnpm add -D codem
 
 # yarn
-yarn add webcode
+$ yarn add -D codem
 ```
 
 ## Quick Start
@@ -20,8 +20,8 @@ yarn add webcode
 #### 1. Create Config File
 
 ```typescript
-// webcode.config.ts
-import { defineConfig, VscodeChannel } from 'webcode'
+// codem.config.ts
+import { defineConfig, VscodeChannel } from 'codem'
 
 export default defineConfig({
   // Use stable or insider channel
@@ -34,17 +34,17 @@ export default defineConfig({
   // commit: '123abc...',
   
   // Configure base URL for VSCode resources
-  baseUrl: '/webcode',
+  baseUrl: '/vscode',
   
-  // Set output directory (default: ./webcode)
-  output: './public/webcode'
+  // Set output directory (default: ./vscode)
+  output: './public/vscode'
 })
 ```
 
 #### 2. Run CLI
 
 ```bash
-npx webcode
+npx codem
 ```
 
 #### 3. Use VSCode in your project
@@ -59,8 +59,8 @@ npx webcode
 <body>
   <div id="app"></div>
   <script type="module">
-    // import entry from the webcode output
-    import create from './webcode/index.js'
+    // import entry from the codem output
+    import create from './vscode/index.js'
     
     create(window.document.body, {
       // VSCode workbench options
@@ -75,11 +75,11 @@ npx webcode
 ## Configuration Files
 
 Config file can be one of the following:
-- `webcode.config.ts`
-- `webcode.config.mts`
-- `webcode.config.js`
-- `webcode.config.mjs`
-- `webcode.config.json`
+- `codem.config.ts`
+- `codem.config.mts`
+- `codem.config.js`
+- `codem.config.mjs`
+- `codem.config.json`
 
 ## Configuration Options
 
@@ -88,8 +88,8 @@ Config file can be one of the following:
 | channel | VscodeChannel | VscodeChannel.Stable | The VSCode release channel to use |
 | version | string | 'latest' | Specific VSCode version to use |
 | commit | string | undefined | Specific commit hash from microsoft/vscode repository |
-| baseUrl | string | '/webcode' | Base URL path for loading VSCode resources |
-| output | string | './webcode' | Directory where VSCode files will be output |
+| baseUrl | string | '/vscode' | Base URL path for loading VSCode resources |
+| output | string | './vscode' | Directory where VSCode files will be output |
 
 ## Examples
 

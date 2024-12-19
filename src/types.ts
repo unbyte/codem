@@ -34,14 +34,14 @@ export interface Config {
   /**
    * The base URL path for loading VSCode web-standalone resources
    *
-   * @default `/webcode`
+   * @default `/vscode`
    */
   baseUrl?: string
 
   /**
    * The directory where VSCode web-standalone files will be output
    *
-   * @default `${cwd}/webcode`
+   * @default `${cwd}/vscode`
    */
   output?: string
 }
