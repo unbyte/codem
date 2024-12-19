@@ -12,9 +12,7 @@
   "bugs": {
     "url": "https://github.com/unbyte/webcode/issues"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "bin": {
     "webcode": "dist/cli/index.js"
   },
@@ -33,6 +31,7 @@
     }
   },
   "scripts": {
+    "prepare": "lefthook install",
     "check": "pnpm check:lint && pnpm check:type",
     "check:lint": "biome check",
     "check:type": "tsc --noEmit",
