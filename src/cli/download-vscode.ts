@@ -9,15 +9,14 @@ import { progress } from './utils'
 
 const debug = d('codem:download-vscode')
 
-export async function downloadVscode(config: NormalizedConfig) {
-  debug('remove output directory', config.output)
-  await rm(config.output, { recursive: true, force: true })
-  await mkdir(config.output, { recursive: true })
+export async function downloadVscode({ output, specifier }: NormalizedConfig) {
+  debug('remove output directory', output)
+  await rm(output, { recursive: true, force: true })
+  await mkdir(output, { recursive: true })
 
-  const specifier = config.commit ? `commit:${config.commit}` : config.version
-  debug('specifier', specifier)
-
-  const url = `https://update.code.visualstudio.com/${specifier}/web-standalone/${config.channel}`
+  const url = `https://update.code.visualstudio.com/${
+    'commit' in specifier ? `commit:${specifier.commit}` : specifier.version
+  }/web-standalone/${specifier.channel}`
   debug('downloading vscode from', url)
 
   const response = await fetch(url)
@@ -35,12 +34,7 @@ export async function downloadVscode(config: NormalizedConfig) {
   try {
     const total = Number(response.headers.get('content-length')) || 0
     using bar = progress('Downloading VSCode...', total)
-    await pipeline(
-      raw,
-      bar.stream,
-      gunzip(),
-      extract(config.output, { strip: 1 }),
-    )
+    await pipeline(raw, bar.stream, gunzip(), extract(output, { strip: 1 }))
   } catch (error) {
     throw new Error('failed to extract VSCode', { cause: error })
   }

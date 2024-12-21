@@ -19,6 +19,13 @@ $ yarn add -D codem
 
 #### 1. Create Config File
 
+Config file can be one of the following:
+- `codem.config.ts`
+- `codem.config.mts`
+- `codem.config.js`
+- `codem.config.mjs`
+- `codem.config.json`
+
 ```typescript
 // codem.config.ts
 import { defineConfig, VscodeChannel } from 'codem'
@@ -28,15 +35,15 @@ export default defineConfig({
   channel: VscodeChannel.Stable,
   
   // Specify VSCode version (optional)
-  version: '1.86.0',
+  version: '1.96.1'
   
   // Or use a specific commit hash from microsoft/vscode repository (takes precedence over version)
   // commit: '123abc...',
   
-  // Configure base URL for VSCode resources
-  baseUrl: '/vscode',
+  // The base path for loading VSCode resources in runtime
+  basePath: '/vscode',
   
-  // Set output directory (default: ./vscode)
+  // The output directory for downloaded VSCode files
   output: './public/vscode'
 })
 ```
@@ -49,47 +56,24 @@ npx codem
 
 #### 3. Use VSCode in your project
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>VSCode Web</title>
-</head>
-<body>
-  <div id="app"></div>
-  <script type="module">
-    // import entry from the codem output
-    import create from './vscode/index.js'
-    
-    create(window.document.body, {
-      // VSCode workbench options
-      folderUri: '/workspace',
-      // ... other VSCode options
-    })
-  </script>
-</body>
-</html>
+```typescript
+// import entry from the codem ${basePath}/index.js
+import create from '/vscode/index.js'
+
+await create(window.document.body, {
+  // vscode workbench construction options
+  productConfiguration: {
+    nameShort: "VSCode",
+    nameLong: "VSCode in My Project",
+    applicationName: "vscode-in-my-project",
+    dataFolderName: ".vscode-in-my-project",
+    version: "1.0.0",
+  },
+  // ... other options
+})
 ```
 
-## Configuration Files
-
-Config file can be one of the following:
-- `codem.config.ts`
-- `codem.config.mts`
-- `codem.config.js`
-- `codem.config.mjs`
-- `codem.config.json`
-
-## Configuration Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| channel | VscodeChannel | VscodeChannel.Stable | The VSCode release channel to use |
-| version | string | 'latest' | Specific VSCode version to use |
-| commit | string | undefined | Specific commit hash from microsoft/vscode repository |
-| baseUrl | string | '/vscode' | Base URL path for loading VSCode resources |
-| output | string | './vscode' | Directory where VSCode files will be output |
+See [Web Workbench API](https://github.com/microsoft/vscode/blob/main/src/vs/workbench/browser/web.api.ts) for more available options.
 
 ## Examples
 

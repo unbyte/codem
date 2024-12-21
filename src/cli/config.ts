@@ -6,12 +6,25 @@ import { type Config, VscodeChannel } from '../types'
 
 const debug = d('codem:config')
 
+export interface Base {
+  type: 'url' | 'path'
+  value: string
+}
+
+export type Specifier =
+  | {
+      channel: VscodeChannel
+      commit: string
+    }
+  | {
+      channel: VscodeChannel
+      version: string
+    }
+
 export interface NormalizedConfig {
-  channel: VscodeChannel
-  version?: string
-  commit?: string
+  specifier: Specifier
   output: string
-  baseUrl: string
+  base: Base
 }
 
 export async function loadConfig() {
@@ -46,23 +59,49 @@ export async function loadConfig() {
 }
 
 function normalizeConfig(config: Config): NormalizedConfig {
-  let version: string | undefined
-  let commit: string | undefined
-  if (config.commit) {
-    console.log('using commit', config.commit)
-    commit = config.commit
-  } else if (config.version) {
-    console.log('using version', config.version)
-    version = config.version
-  } else {
-    console.log('no version or commit found, using latest')
-    version = 'latest'
-  }
+  const specifier = normalizeSpecifier()
+  const base = normalizeBase()
+
   return {
+    specifier,
+    base,
     output: config.output || join(process.cwd(), 'vscode'),
-    channel: config.channel || VscodeChannel.Insider,
-    baseUrl: config.baseUrl || '/vscode',
-    version,
-    commit,
+  }
+
+  function normalizeSpecifier(): Specifier {
+    const channel = config.channel || VscodeChannel.Stable
+    if (config.commit) {
+      console.log('using commit', config.commit)
+      return {
+        channel,
+        commit: config.commit,
+      }
+    } else if (config.version) {
+      console.log('using version', config.version)
+      return {
+        channel,
+        version: config.version,
+      }
+    } else {
+      console.log('no version or commit found, using latest')
+      return {
+        channel,
+        version: 'latest',
+      }
+    }
+  }
+
+  function normalizeBase(): Base {
+    if (config.baseUrl) {
+      return {
+        type: 'url',
+        value: config.baseUrl.replace(/\/$/, ''),
+      }
+    } else {
+      return {
+        type: 'path',
+        value: config.basePath?.replace(/\/$/, '') || '/vscode',
+      }
+    }
   }
 }

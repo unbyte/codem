@@ -2,39 +2,34 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	</head>
-
 	<body>
 	</body>
+  <script type="module">
+    import create from '/vscode/index.js';
 
-<script type="module">
-import create from '/vscode/index.js';
-(function () {  
-  create(window.document.body, {
-    productConfiguration: {
-      nameShort: "VSCode",
-      nameLong: "VSCode Playground",
-      applicationName: "vscode-playground",
-      dataFolderName: ".vscode-playground",
-      version: "1.0.0",
-      extensionEnabledApiProposals: {
+    await create(window.document.body, {
+      productConfiguration: {
+        nameShort: "VSCode",
+        nameLong: "VSCode Playground",
+        applicationName: "vscode-playground",
+        dataFolderName: ".vscode-playground",
+        version: "1.0.0",
+        extensionEnabledApiProposals: {
+        },
+        openToWelcomeMainPage: true
       },
-      openToWelcomeMainPage: true
-    },
-    windowIndicator: {
-        label: 'VSCode Playground',
-        tooltip: 'VSCode Playground',
-        command: ''
-    },
-    additionalBuiltinExtensions: [
-    ],
-    settingsSyncOptions: {
-        enabled: false
-    },
-  });
-})();
-
-</script>
+      windowIndicator: {
+          label: 'VSCode Playground',
+          tooltip: 'VSCode Playground',
+          command: ''
+      },
+      additionalBuiltinExtensions: [
+      ],
+      settingsSyncOptions: {
+          enabled: false
+      },
+    });
+  </script>
 </html>
