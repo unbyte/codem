@@ -4,46 +4,63 @@ import type { NormalizedConfig } from './config'
 
 export async function generateEntry({ base, output }: NormalizedConfig) {
   const fragments = []
-  fragments.push(`
-async function createVSCode(baseUrl, mountpoint, config) {
-  globalThis._VSCODE_FILE_ROOT = \`\${baseUrl}/out/\`
-  await import(\`\${baseUrl}/out/nls.messages.js\`)
-  const { create } = await import(\`\${baseUrl}/out/vs/workbench/workbench.web.main.internal.js\`)
-  insertStyle(baseUrl)
-  return create(mountpoint, config)
-}`)
 
   fragments.push(`
-function insertStyle(baseUrl) {
-  // insert style from vs/workbench/workbench.web.main.css if not yet
-  if (document.querySelector('link[data-name="vs/workbench/workbench.web.main"]')) {
-    return
+async function init(baseUrl) {
+  globalThis._VSCODE_FILE_ROOT = \`\${baseUrl}/out/\`
+
+  await import(\`\${baseUrl}/out/nls.messages.js\`)
+  const workbench = await import(\`\${baseUrl}/out/vs/workbench/workbench.web.main.internal.js\`)
+
+  async function create(mountpoint, config) {
+    insertStyle()
+    return workbench.create(mountpoint, config)
+
+    function insertStyle() {
+      // insert style from vs/workbench/workbench.web.main.css if not yet
+      if (document.querySelector('link[data-name="vs/workbench/workbench.web.main"]')) {
+        return
+      }
+      const style = document.createElement('link')
+      style.rel = 'stylesheet'
+      style.setAttribute('data-name', 'vs/workbench/workbench.web.main')
+      style.href = \`\${baseUrl}/out/vs/workbench/workbench.web.main.css\`
+      document.head.appendChild(style)
+    }
   }
-  const style = document.createElement('link')
-  style.rel = 'stylesheet'
-  style.setAttribute('data-name', 'vs/workbench/workbench.web.main')
-  style.href = \`\${baseUrl}/out/vs/workbench/workbench.web.main.css\`
-  document.head.appendChild(style)
-}`)
+
+  const exported = {
+    create
+  }
+  for (const key in workbench) {
+    if (key === 'create' || key === 'default' || key.startsWith('__')) {
+      continue
+    }
+    Object.defineProperty(exported, key, {
+      get() {
+        return workbench[key]
+      }
+    })
+  }
+
+  return exported
+}
+`)
 
   if (base.type === 'url') {
     fragments.push(`
-export default function(mountpoint, config) {
-  return createVSCode(${JSON.stringify(base.value)}, mountpoint, config)
-}`)
+export default await init(${JSON.stringify(base.value)})
+`)
   } else {
     fragments.push(`
-function getBaseUrl() {
+export default await init((() => {
   const url = new URL(window.location.href)
   url.pathname = ${JSON.stringify(base.value)}
   url.search = ''
   url.hash = ''
   return url.toString()
-}`)
-    fragments.push(`
-export default function(mountpoint, config) {
-  return createVSCode(getBaseUrl(), mountpoint, config)
-}`)
+})())
+`)
   }
 
   const entry = fragments.join('\n')
