@@ -5,6 +5,10 @@ import type { NormalizedConfig } from './config'
 export async function generateEntry({ output }: NormalizedConfig) {
   const entry = `
 async function init(baseUrl) {
+  if (baseUrl.endsWith('/')) {
+    baseUrl = baseUrl.slice(0, -1)
+  }
+
   globalThis._VSCODE_FILE_ROOT = \`\${baseUrl}/out/\`
 
   await import(\`\${baseUrl}/out/nls.messages.js\`)
