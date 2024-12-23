@@ -32,22 +32,6 @@ export interface Config {
   version?: string
 
   /**
-   * The base path for loading VSCode web-standalone resources.
-   *
-   * In the runtime, vscode resources will be loaded from `${host}/${basePath}`.
-   *
-   * Note: This is only used when `baseUrl` is not specified.
-   *
-   * @default `/vscode`
-   */
-  basePath?: string
-
-  /**
-   * The base URL path for loading VSCode web-standalone resources
-   */
-  baseUrl?: string
-
-  /**
    * The directory where VSCode web-standalone files will be output
    *
    * @default `${cwd}/vscode`

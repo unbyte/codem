@@ -39,10 +39,7 @@ export default defineConfig({
   
   // Or use a specific commit hash from microsoft/vscode repository (takes precedence over version)
   // commit: '123abc...',
-  
-  // The base path for loading VSCode resources in runtime
-  basePath: '/vscode',
-  
+
   // The output directory for downloaded VSCode files
   output: './public/vscode'
 })
@@ -57,10 +54,10 @@ npx codem
 #### 3. Use VSCode in your project
 
 ```typescript
-// import entry from the codem ${basePath}/index.js
-import create from '/vscode/index.js'
+// import entry from the codem ${output}/index.js
+import workbench from '/vscode/index.js'
 
-await create(window.document.body, {
+await workbench.create(window.document.body, {
   // vscode workbench construction options
   productConfiguration: {
     nameShort: "VSCode",

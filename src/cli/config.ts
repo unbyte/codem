@@ -24,7 +24,6 @@ export type Specifier =
 export interface NormalizedConfig {
   specifier: Specifier
   output: string
-  base: Base
 }
 
 export async function loadConfig() {
@@ -60,11 +59,9 @@ export async function loadConfig() {
 
 function normalizeConfig(config: Config): NormalizedConfig {
   const specifier = normalizeSpecifier()
-  const base = normalizeBase()
 
   return {
     specifier,
-    base,
     output: config.output || join(process.cwd(), 'vscode'),
   }
 
@@ -87,20 +84,6 @@ function normalizeConfig(config: Config): NormalizedConfig {
       return {
         channel,
         version: 'latest',
-      }
-    }
-  }
-
-  function normalizeBase(): Base {
-    if (config.baseUrl) {
-      return {
-        type: 'url',
-        value: config.baseUrl.replace(/\/$/, ''),
-      }
-    } else {
-      return {
-        type: 'path',
-        value: config.basePath?.replace(/\/$/, '') || '/vscode',
       }
     }
   }

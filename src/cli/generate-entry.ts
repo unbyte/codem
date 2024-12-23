@@ -2,10 +2,8 @@ import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { NormalizedConfig } from './config'
 
-export async function generateEntry({ base, output }: NormalizedConfig) {
-  const fragments = []
-
-  fragments.push(`
+export async function generateEntry({ output }: NormalizedConfig) {
+  const entry = `
 async function init(baseUrl) {
   globalThis._VSCODE_FILE_ROOT = \`\${baseUrl}/out/\`
 
@@ -45,25 +43,8 @@ async function init(baseUrl) {
 
   return exported
 }
-`)
-
-  if (base.type === 'url') {
-    fragments.push(`
-export default await init(${JSON.stringify(base.value)})
-`)
-  } else {
-    fragments.push(`
-export default await init((() => {
-  const url = new URL(window.location.href)
-  url.pathname = ${JSON.stringify(base.value)}
-  url.search = ''
-  url.hash = ''
-  return url.toString()
-})())
-`)
-  }
-
-  const entry = fragments.join('\n')
+export default await init(import.meta.resolve('./'))
+`
 
   const entryPath = join(output, 'index.js')
   await writeFile(entryPath, entry)
